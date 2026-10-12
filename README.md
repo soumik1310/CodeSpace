@@ -1,4 +1,4 @@
-# CodeArena — Online Judge Platform
+# CodeSpace — Online Judge Platform
 
 A full-stack LeetCode-style coding platform where users can browse DSA problems, write and run code directly in the browser, submit solutions against hidden test cases, track solved problems, ask an AI for help when stuck, and watch video solutions.
 
