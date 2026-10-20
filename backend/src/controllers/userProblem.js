@@ -241,12 +241,10 @@ const submittedProblem = async(req,res)=>{
     const userId = req.result._id;
     const problemId = req.params.pid;
 
-   const ans = await Submission.find({userId,problemId});
-  
-  if(ans.length==0)
-    res.status(200).send("No Submission is persent");
+    const ans = await Submission.find({userId,problemId});
 
-  res.status(200).send(ans);
+    // always return a list (empty if there are no submissions)
+    return res.status(200).json(ans);
 
   }
   catch(err){
@@ -257,5 +255,3 @@ const submittedProblem = async(req,res)=>{
 
 
 module.exports = {createProblem,updateProblem,deleteProblem,getProblemById,getAllProblem,solvedAllProblembyUser,submittedProblem};
-
-
