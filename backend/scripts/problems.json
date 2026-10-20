@@ -1,0 +1,614 @@
+[
+  {
+    "title": "Pair With Target Sum",
+    "description": "You are given a list of distinct integers and a target value. Exactly one pair of positions i < j has values that add up to the target. Find that pair.\n\nInput format:\nLine 1: two integers n and target.\nLine 2: n distinct integers.\n\nOutput format:\nTwo integers i and j (0-based, i < j), separated by a space.\n\nConstraints:\n2 <= n <= 100000, values fit in a 32-bit signed integer, exactly one valid pair exists.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "4 9\n2 7 11 15",
+        "output": "0 1",
+        "explanation": "Positions 0 and 1 hold 2 and 7, which add up to 9."
+      },
+      {
+        "input": "3 6\n3 2 4",
+        "output": "1 2",
+        "explanation": "Positions 1 and 2 hold 2 and 4, which add up to 6."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "2 -1\n5 -6",
+        "output": "0 1"
+      },
+      {
+        "input": "5 11\n1 9 -3 14 8",
+        "output": "2 3"
+      },
+      {
+        "input": "5 -44\n33 31 -6 -38 29",
+        "output": "2 3"
+      },
+      {
+        "input": "10 -27\n32 -9 17 -18 29 -8 -5 -36 26 3",
+        "output": "1 3"
+      },
+      {
+        "input": "4 14\n10 -19 4 -3",
+        "output": "0 2"
+      },
+      {
+        "input": "5 15\n21 29 -14 -5 -23",
+        "output": "1 2"
+      },
+      {
+        "input": "2 -39\n-10 -29",
+        "output": "0 1"
+      },
+      {
+        "input": "2 1\n33 -32",
+        "output": "0 1"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst [n, target] = lines[0].trim().split(/\\s+/).map(Number);\nconst a = lines[1].trim().split(/\\s+/).map(Number);\nconst seen = new Map();\nfor (let j = 0; j < n; j++) {\n  const need = target - a[j];\n  if (seen.has(need)) { console.log(seen.get(need) + ' ' + j); break; }\n  seen.set(a[j], j);\n}\n"
+      }
+    ]
+  },
+  {
+    "title": "Best Contiguous Stretch",
+    "description": "Given a list of integers (positive, zero or negative), find the largest possible sum of a non-empty contiguous block of the list.\n\nInput format:\nLine 1: integer n.\nLine 2: n integers.\n\nOutput format:\nOne integer, the largest block sum.\n\nConstraints:\n1 <= n <= 100000, |value| <= 10000.",
+    "difficulty": "medium",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "9\n-2 1 -3 4 -1 2 1 -5 4",
+        "output": "6",
+        "explanation": "The block 4, -1, 2, 1 sums to 6, and no block does better."
+      },
+      {
+        "input": "3\n-4 -1 -7",
+        "output": "-1",
+        "explanation": "Every number is negative, so the best block is the single value -1."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1\n5",
+        "output": "5"
+      },
+      {
+        "input": "1\n-5",
+        "output": "-5"
+      },
+      {
+        "input": "4\n1 2 3 4",
+        "output": "10"
+      },
+      {
+        "input": "5\n0 0 0 0 0",
+        "output": "0"
+      },
+      {
+        "input": "7\n-2 -17 -8 17 -6 -19 -3",
+        "output": "17"
+      },
+      {
+        "input": "8\n14 3 15 9 -6 -3 18 1",
+        "output": "51"
+      },
+      {
+        "input": "1\n-12",
+        "output": "-12"
+      },
+      {
+        "input": "12\n-14 -3 20 12 -20 -14 15 3 11 -17 -10 -18",
+        "output": "32"
+      },
+      {
+        "input": "4\n0 -11 5 3",
+        "output": "8"
+      },
+      {
+        "input": "11\n3 4 -8 2 7 0 -10 20 12 5 -18",
+        "output": "37"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst n = Number(lines[0]);\nconst a = lines[1].trim().split(/\\s+/).map(Number);\nlet best = a[0], cur = a[0];\nfor (let i = 1; i < n; i++) {\n  cur = Math.max(a[i], cur + a[i]);\n  best = Math.max(best, cur);\n}\nconsole.log(best);\n"
+      }
+    ]
+  },
+  {
+    "title": "Ways To Climb",
+    "description": "A staircase has n steps. You can climb either 1 or 2 steps at a time. Count the number of different ways to reach the top.\n\nInput format:\nOne integer n.\n\nOutput format:\nOne integer, the number of distinct ways.\n\nConstraints:\n1 <= n <= 45.",
+    "difficulty": "easy",
+    "tags": "dp",
+    "visibleTestCases": [
+      {
+        "input": "3",
+        "output": "3",
+        "explanation": "The ways are 1+1+1, 1+2 and 2+1, so the answer is 3."
+      },
+      {
+        "input": "4",
+        "output": "5",
+        "explanation": "The ways are 1+1+1+1, 1+1+2, 1+2+1, 2+1+1 and 2+2, so the answer is 5."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1",
+        "output": "1"
+      },
+      {
+        "input": "2",
+        "output": "2"
+      },
+      {
+        "input": "10",
+        "output": "89"
+      },
+      {
+        "input": "30",
+        "output": "1346269"
+      },
+      {
+        "input": "45",
+        "output": "1836311903"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst n = Number(lines[0]);\nlet a = 1, b = 1;\nfor (let i = 2; i <= n; i++) { [a, b] = [b, a + b]; }\nconsole.log(b);\n"
+      }
+    ]
+  },
+  {
+    "title": "Fewest Coins",
+    "description": "You have an unlimited supply of coins of the given denominations. Find the smallest number of coins needed to make exactly the target amount, or report -1 if it cannot be done.\n\nInput format:\nLine 1: two integers n (number of denominations) and amount.\nLine 2: n distinct positive integers, the denominations.\n\nOutput format:\nOne integer, the minimum number of coins, or -1.\n\nConstraints:\n1 <= n <= 12, 1 <= amount <= 10000, each denomination <= 10000.",
+    "difficulty": "medium",
+    "tags": "dp",
+    "visibleTestCases": [
+      {
+        "input": "3 11\n1 2 5",
+        "output": "3",
+        "explanation": "Use 5 + 5 + 1, which is three coins."
+      },
+      {
+        "input": "1 3\n2",
+        "output": "-1",
+        "explanation": "Coins of value 2 can never add up to 3, so the answer is -1."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1 1\n1",
+        "output": "1"
+      },
+      {
+        "input": "2 7\n2 4",
+        "output": "-1"
+      },
+      {
+        "input": "3 100\n1 5 25",
+        "output": "4"
+      },
+      {
+        "input": "3 6\n1 3 4",
+        "output": "2"
+      },
+      {
+        "input": "2 9999\n7 13",
+        "output": "771"
+      },
+      {
+        "input": "2 19\n12 9",
+        "output": "-1"
+      },
+      {
+        "input": "2 39\n4 5",
+        "output": "8"
+      },
+      {
+        "input": "4 26\n7 1 4 8",
+        "output": "4"
+      },
+      {
+        "input": "4 27\n6 7 8 4",
+        "output": "4"
+      },
+      {
+        "input": "1 7\n4",
+        "output": "-1"
+      },
+      {
+        "input": "4 2\n2 11 10 1",
+        "output": "1"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst [n, amount] = lines[0].trim().split(/\\s+/).map(Number);\nconst coins = lines[1].trim().split(/\\s+/).map(Number);\nconst dp = new Array(amount + 1).fill(Infinity);\ndp[0] = 0;\nfor (let x = 1; x <= amount; x++)\n  for (const c of coins)\n    if (c <= x && dp[x - c] + 1 < dp[x]) dp[x] = dp[x - c] + 1;\nconsole.log(dp[amount] === Infinity ? -1 : dp[amount]);\n"
+      }
+    ]
+  },
+  {
+    "title": "Count The Islands",
+    "description": "A map is a grid of 0s (water) and 1s (land). Land cells that touch each other horizontally or vertically belong to the same island. Count the islands.\n\nInput format:\nLine 1: two integers r and c.\nNext r lines: a string of c characters, each 0 or 1 (no spaces).\n\nOutput format:\nOne integer, the number of islands.\n\nConstraints:\n1 <= r, c <= 300.",
+    "difficulty": "medium",
+    "tags": "graph",
+    "visibleTestCases": [
+      {
+        "input": "4 5\n11000\n11000\n00100\n00011",
+        "output": "3",
+        "explanation": "There are three islands: the 2x2 block, the single cell in the middle, and the pair at the bottom right."
+      },
+      {
+        "input": "3 3\n101\n010\n101",
+        "output": "5",
+        "explanation": "The corners only touch the centre diagonally, so each of the five land cells is its own island."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1 1\n0",
+        "output": "0"
+      },
+      {
+        "input": "1 1\n1",
+        "output": "1"
+      },
+      {
+        "input": "2 2\n11\n11",
+        "output": "1"
+      },
+      {
+        "input": "3 4\n0000\n0000\n0000",
+        "output": "0"
+      },
+      {
+        "input": "1 7\n0010100",
+        "output": "2"
+      },
+      {
+        "input": "6 5\n10100\n11100\n01100\n00100\n00100\n00001",
+        "output": "2"
+      },
+      {
+        "input": "7 5\n01111\n10101\n00100\n10111\n11010\n01111\n00110",
+        "output": "2"
+      },
+      {
+        "input": "5 2\n00\n01\n01\n00\n11",
+        "output": "2"
+      },
+      {
+        "input": "4 1\n0\n1\n0\n0",
+        "output": "1"
+      },
+      {
+        "input": "4 5\n00110\n00010\n00000\n00101",
+        "output": "3"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst [r, c] = lines[0].trim().split(/\\s+/).map(Number);\nconst g = [];\nfor (let i = 0; i < r; i++) g.push(lines[1 + i].trim().split(''));\nlet count = 0;\nfor (let i = 0; i < r; i++) {\n  for (let j = 0; j < c; j++) {\n    if (g[i][j] !== '1') continue;\n    count++;\n    const stack = [[i, j]];\n    g[i][j] = '0';\n    while (stack.length) {\n      const [x, y] = stack.pop();\n      for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {\n        const nx = x + dx, ny = y + dy;\n        if (nx >= 0 && ny >= 0 && nx < r && ny < c && g[nx][ny] === '1') {\n          g[nx][ny] = '0';\n          stack.push([nx, ny]);\n        }\n      }\n    }\n  }\n}\nconsole.log(count);\n"
+      }
+    ]
+  },
+  {
+    "title": "Reverse The Chain",
+    "description": "A singly linked list stores a sequence of values. Reverse the list so that the last node becomes the first, and print the new order.\n\nInput format:\nLine 1: integer n, the number of nodes.\nLine 2: n values in list order.\n\nOutput format:\nThe n values in reversed order, separated by single spaces.\n\nConstraints:\n1 <= n <= 100000.",
+    "difficulty": "easy",
+    "tags": "linkedList",
+    "visibleTestCases": [
+      {
+        "input": "5\n1 2 3 4 5",
+        "output": "5 4 3 2 1",
+        "explanation": "Read from the other end, the list is 5 4 3 2 1."
+      },
+      {
+        "input": "2\n10 20",
+        "output": "20 10",
+        "explanation": "The two nodes swap places."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1\n7",
+        "output": "7"
+      },
+      {
+        "input": "3\n-1 0 1",
+        "output": "1 0 -1"
+      },
+      {
+        "input": "15\n11 27 -91 62 -51 57 43 -57 -95 -20 42 -55 -98 -84 -23",
+        "output": "-23 -84 -98 -55 42 -20 -95 -57 43 57 -51 62 -91 27 11"
+      },
+      {
+        "input": "6\n6 69 34 -47 -29 -65",
+        "output": "-65 -29 -47 34 69 6"
+      },
+      {
+        "input": "15\n-9 63 -13 -71 -72 -3 24 39 9 -13 44 -8 82 35 -56",
+        "output": "-56 35 82 -8 44 -13 9 39 24 -3 -72 -71 -13 63 -9"
+      },
+      {
+        "input": "11\n14 27 8 -19 7 -72 99 53 -95 -51 -16",
+        "output": "-16 -51 -95 53 99 -72 7 -19 8 27 14"
+      },
+      {
+        "input": "5\n72 -77 -42 -29 52",
+        "output": "52 -29 -42 -77 72"
+      },
+      {
+        "input": "1\n48",
+        "output": "48"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst n = Number(lines[0]);\nconst a = lines[1].trim().split(/\\s+/);\nlet prev = null;\nlet head = null;\nfor (let i = n - 1; i >= 0; i--) head = { val: a[i], next: head };\nwhile (head) { const nxt = head.next; head.next = prev; prev = head; head = nxt; }\nconst out = [];\nfor (let p = prev; p; p = p.next) out.push(p.val);\nconsole.log(out.join(' '));\n"
+      }
+    ]
+  },
+  {
+    "title": "Longest Rising Run",
+    "description": "Given a list of integers, find the length of the longest strictly increasing subsequence. A subsequence keeps the original order but may skip elements.\n\nInput format:\nLine 1: integer n.\nLine 2: n integers.\n\nOutput format:\nOne integer, the length of the longest strictly increasing subsequence.\n\nConstraints:\n1 <= n <= 100000.",
+    "difficulty": "medium",
+    "tags": "dp",
+    "visibleTestCases": [
+      {
+        "input": "8\n10 9 2 5 3 7 101 18",
+        "output": "4",
+        "explanation": "One longest choice is 2, 3, 7, 101, so the answer is 4."
+      },
+      {
+        "input": "4\n7 7 7 7",
+        "output": "1",
+        "explanation": "Equal values do not count as increasing, so the answer is 1."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1\n3",
+        "output": "1"
+      },
+      {
+        "input": "5\n1 2 3 4 5",
+        "output": "5"
+      },
+      {
+        "input": "5\n5 4 3 2 1",
+        "output": "1"
+      },
+      {
+        "input": "9\n16 -2 19 14 26 -22 17 -4 8",
+        "output": "3"
+      },
+      {
+        "input": "12\n1 13 15 -21 5 14 -29 -27 -15 18 8 -25",
+        "output": "4"
+      },
+      {
+        "input": "2\n8 1",
+        "output": "1"
+      },
+      {
+        "input": "8\n17 10 23 -13 -19 0 28 18",
+        "output": "3"
+      },
+      {
+        "input": "9\n-24 19 -27 27 -27 -12 24 5 30",
+        "output": "4"
+      },
+      {
+        "input": "10\n-2 -24 -30 11 15 6 -9 14 -3 4",
+        "output": "4"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst n = Number(lines[0]);\nconst a = lines[1].trim().split(/\\s+/).map(Number);\nconst tails = [];\nfor (const x of a) {\n  let lo = 0, hi = tails.length;\n  while (lo < hi) { const mid = (lo + hi) >> 1; if (tails[mid] < x) lo = mid + 1; else hi = mid; }\n  tails[lo] = x;\n}\nconsole.log(tails.length);\n"
+      }
+    ]
+  },
+  {
+    "title": "Count The Clusters",
+    "description": "An undirected graph has n nodes labelled 0 to n-1 and m edges. Two nodes belong to the same cluster if you can walk from one to the other along edges. Count the clusters.\n\nInput format:\nLine 1: two integers n and m.\nNext m lines: two integers u and v, meaning there is an edge between u and v.\n\nOutput format:\nOne integer, the number of clusters.\n\nConstraints:\n1 <= n <= 100000, 0 <= m <= 200000.",
+    "difficulty": "medium",
+    "tags": "graph",
+    "visibleTestCases": [
+      {
+        "input": "5 3\n0 1\n1 2\n3 4",
+        "output": "2",
+        "explanation": "Nodes {0,1,2} form one cluster and {3,4} form another, so the answer is 2."
+      },
+      {
+        "input": "4 0",
+        "output": "4",
+        "explanation": "There are no edges, so every node is its own cluster and the answer is 4."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1 0",
+        "output": "1"
+      },
+      {
+        "input": "3 3\n0 1\n1 2\n0 2",
+        "output": "1"
+      },
+      {
+        "input": "6 2\n0 5\n2 3",
+        "output": "4"
+      },
+      {
+        "input": "5 2\n0 1\n0 2",
+        "output": "3"
+      },
+      {
+        "input": "10 7\n2 3\n2 7\n3 5\n3 8\n4 8\n4 9\n6 7",
+        "output": "3"
+      },
+      {
+        "input": "7 8\n0 1\n0 5\n1 2\n1 5\n2 5\n3 5\n3 6\n5 6",
+        "output": "2"
+      },
+      {
+        "input": "6 3\n1 3\n2 4\n4 5",
+        "output": "3"
+      },
+      {
+        "input": "6 3\n0 2\n0 4\n2 5",
+        "output": "3"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst [n, m] = lines[0].trim().split(/\\s+/).map(Number);\nconst adj = Array.from({ length: n }, () => []);\nfor (let i = 1; i <= m; i++) {\n  const [u, v] = lines[i].trim().split(/\\s+/).map(Number);\n  adj[u].push(v); adj[v].push(u);\n}\nconst seen = new Array(n).fill(false);\nlet comps = 0;\nfor (let s = 0; s < n; s++) {\n  if (seen[s]) continue;\n  comps++;\n  const stack = [s];\n  seen[s] = true;\n  while (stack.length) {\n    const u = stack.pop();\n    for (const v of adj[u]) if (!seen[v]) { seen[v] = true; stack.push(v); }\n  }\n}\nconsole.log(comps);\n"
+      }
+    ]
+  },
+  {
+    "title": "Merge Two Sorted Chains",
+    "description": "Two linked lists are each sorted in non-decreasing order. Merge them into one sorted list and print it.\n\nInput format:\nLine 1: integer n, the length of the first list.\nLine 2: n integers.\nLine 3: integer m, the length of the second list.\nLine 4: m integers.\n\nOutput format:\nAll n + m values in non-decreasing order, separated by single spaces.\n\nConstraints:\n1 <= n, m <= 50000.",
+    "difficulty": "easy",
+    "tags": "linkedList",
+    "visibleTestCases": [
+      {
+        "input": "3\n1 2 4\n3\n1 3 4",
+        "output": "1 1 2 3 4 4",
+        "explanation": "Interleaving the two lists in order gives 1 1 2 3 4 4."
+      },
+      {
+        "input": "2\n5 6\n2\n1 2",
+        "output": "1 2 5 6",
+        "explanation": "Every value in the second list is smaller, so it goes first."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1\n1\n1\n1",
+        "output": "1 1"
+      },
+      {
+        "input": "1\n-3\n3\n-3 0 9",
+        "output": "-3 -3 0 9"
+      },
+      {
+        "input": "5\n-8 -5 -4 14 24\n3\n-15 -1 23",
+        "output": "-15 -8 -5 -4 -1 14 23 24"
+      },
+      {
+        "input": "7\n-6 -4 -1 3 6 6 22\n7\n-10 -10 -9 -8 8 12 22",
+        "output": "-10 -10 -9 -8 -6 -4 -1 3 6 6 8 12 22 22"
+      },
+      {
+        "input": "5\n1 10 13 18 23\n4\n-1 11 12 18",
+        "output": "-1 1 10 11 12 13 18 18 23"
+      },
+      {
+        "input": "2\n-13 15\n5\n-13 -9 3 19 21",
+        "output": "-13 -13 -9 3 15 19 21"
+      },
+      {
+        "input": "2\n14 22\n2\n-11 9",
+        "output": "-11 9 14 22"
+      },
+      {
+        "input": "4\n-13 6 12 17\n4\n-13 12 12 24",
+        "output": "-13 -13 6 12 12 12 17 24"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst a = lines[1].trim().split(/\\s+/).map(Number);\nconst b = lines[3].trim().split(/\\s+/).map(Number);\nconst out = [];\nlet i = 0, j = 0;\nwhile (i < a.length && j < b.length) out.push(a[i] <= b[j] ? a[i++] : b[j++]);\nwhile (i < a.length) out.push(a[i++]);\nwhile (j < b.length) out.push(b[j++]);\nconsole.log(out.join(' '));\n"
+      }
+    ]
+  },
+  {
+    "title": "Fewest Edits",
+    "description": "Given two lowercase words, find the minimum number of single-letter edits needed to turn the first word into the second. An edit is one of: insert a letter, delete a letter, or replace a letter.\n\nInput format:\nLine 1: the first word.\nLine 2: the second word.\n\nOutput format:\nOne integer, the minimum number of edits.\n\nConstraints:\n1 <= length of each word <= 500.",
+    "difficulty": "hard",
+    "tags": "dp",
+    "visibleTestCases": [
+      {
+        "input": "horse\nros",
+        "output": "3",
+        "explanation": "Replace h with r, remove r, remove e: three edits."
+      },
+      {
+        "input": "kitten\nsitting",
+        "output": "3",
+        "explanation": "Replace k with s, replace e with i, insert g: three edits."
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "a\na",
+        "output": "0"
+      },
+      {
+        "input": "a\nb",
+        "output": "1"
+      },
+      {
+        "input": "abc\nabc",
+        "output": "0"
+      },
+      {
+        "input": "abc\nxyz",
+        "output": "3"
+      },
+      {
+        "input": "intention\nexecution",
+        "output": "5"
+      },
+      {
+        "input": "adcab\naaddacbad",
+        "output": "5"
+      },
+      {
+        "input": "acdaab\nacd",
+        "output": "3"
+      },
+      {
+        "input": "cdcbbaccb\naddbc",
+        "output": "6"
+      },
+      {
+        "input": "b\nbb",
+        "output": "1"
+      },
+      {
+        "input": "ddbd\nddbcb",
+        "output": "2"
+      },
+      {
+        "input": "cbdaacbc\ncaaadddd",
+        "output": "6"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "JavaScript",
+        "completeCode": "const lines = require('fs').readFileSync(0, 'utf8').split('\\n');\nconst s = lines[0].trim();\nconst t = lines[1].trim();\nconst dp = Array.from({ length: s.length + 1 }, () => new Array(t.length + 1).fill(0));\nfor (let i = 0; i <= s.length; i++) dp[i][0] = i;\nfor (let j = 0; j <= t.length; j++) dp[0][j] = j;\nfor (let i = 1; i <= s.length; i++)\n  for (let j = 1; j <= t.length; j++)\n    dp[i][j] = s[i-1] === t[j-1]\n      ? dp[i-1][j-1]\n      : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);\nconsole.log(dp[s.length][t.length]);\n"
+      }
+    ]
+  }
+]
